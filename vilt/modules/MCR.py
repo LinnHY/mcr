@@ -8,7 +8,7 @@ from vilt.modules import heads, objectives, vilt_utils, dicmor
 from clip import clip
 import json
 import random
-class TopoPromptLearner(nn.Module):
+class TopoPrompt(nn.Module):
     def __init__(self, classnames, prompt_topo): # prompt_topo：各类的拓扑结构
         super().__init__()
 
@@ -118,8 +118,6 @@ class ViLTransformerSS(pl.LightningModule):
     def __init__(self, config):
         super().__init__()
         self.save_hyperparameters()
-        dicmor_args= {'model_name': 'dicmor', 'dataset_name': 'mosi', 'featurePath': 'dataset/MOSI/aligned_50.pkl', 'feature_dims': [512,217], 'train_samples': 1284, 'num_classes': 16, 'language': 'en', 'KeyEval': 'Loss', 'need_data_aligned': True, 'need_model_aligned': True, 'early_stop': 10, 'use_bert': False, 'use_finetune': True, 'attn_mask': True, 'update_epochs': 8, 'attn_dropout_a': 0.2, 'attn_dropout_v': 0.0, 'relu_dropout': 0.0, 'embed_dropout': 0.2, 'res_dropout': 0.0, 'dst_feature_dim_nheads': [32, 8], 'batch_size': config["batch_size"], 'learning_rate': 0.0001, 'nlevels': 4, 'conv1d_kernel_size_l': 5, 'conv1d_kernel_size_a': 5, 'conv1d_kernel_size_v': 5, 'text_dropout': 0.5, 'attn_dropout': 0.3, 'output_dropout': 0.5, 'grad_clip': 0.6, 'patience': 5, 'weight_decay': 0.005, 'transformers': 'bert', 'pretrained': 'bert-base-uncased', 'mode': 'train', 'mr': 0.1, 'model_save_path': 'pt/dicmor-mosi.pth', 'device': assign_gpu([0]), 'train_mode': 'classification', 'feature_T': '', 'feature_A': '', 'feature_V': '', 'cur_seed': 1}
-        #self.dicmor= getattr(dicmor, 'DICMOR')(dicmor_args)
         self.classnames = [
     "apple pie",
     "baby back ribs",
@@ -223,12 +221,12 @@ class ViLTransformerSS(pl.LightningModule):
     "tuna tartare",
     "waffles"
 ]
-        f_topo = '/data/lhy/HPT/data/gpt_data/structure/Food101.json'
+        f_topo = '/data/gpt_data/structure/Food101.json'
         
 
         with open(f_topo, 'r') as f:
             text_topos = json.load(f)
-        self.topo_prompt_learner = TopoPromptLearner(self.classnames, text_topos)
+        self.topo_prompt_learner = TopoPrompt(self.classnames, text_topos)
         
         bert_config = BertConfig(
             vocab_size=config["vocab_size"],

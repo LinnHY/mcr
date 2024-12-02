@@ -12,7 +12,7 @@ CUDA = 11.3
 
 ### Prepare Dataset
 
-We use three vision and language datasets: [MM-IMDb](https://github.com/johnarevalo/gmu-mmimdb), [UPMC Food-101](https://visiir.isir.upmc.fr/explore),
+We use two vision and language datasets: [MM-IMDb](https://github.com/johnarevalo/gmu-mmimdb), [UPMC Food-101](https://visiir.isir.upmc.fr/explore),
 
 ### Train
 
@@ -27,3 +27,14 @@ python run.py with data_root=<ARROW_ROOT> \
         <task_finetune_mmimdb or task_finetune_food101> \
         load_path=<PRETRAINED_MODEL_PATH> \
         exp_name=<EXP_NAME>
+        
+2. Start to test.
+
+python run.py with data_root=<ARROW_ROOT> \
+        num_gpus=<NUM_GPUS> \
+        num_nodes=<NUM_NODES> \
+        per_gpu_batchsize=<BS_FITS_YOUR_GPU> \
+        <task_finetune_mmimdb or task_finetune_food101> \
+        load_path=<PRETRAINED_MODEL_PATH> \
+        exp_name=<EXP_NAME>
+        test_only=True

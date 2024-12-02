@@ -36,5 +36,5 @@ python run.py with data_root=<ARROW_ROOT> \
         per_gpu_batchsize=<BS_FITS_YOUR_GPU> \
         <task_finetune_mmimdb or task_finetune_food101> \
         load_path=<PRETRAINED_MODEL_PATH> \
-        exp_name=<EXP_NAME>
+        exp_name=<EXP_NAME>\
         test_only=True

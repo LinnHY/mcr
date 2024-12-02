@@ -38,7 +38,6 @@ class MSE(nn.Module):
 class GraphBasedRecovery(nn.Module):
     def __init__(self, args):
         args=easydict.EasyDict(args)
-        super(DICMOR, self).__init__()
         if args.use_bert:
             self.text_model = BertTextEncoder(use_finetune=args.use_finetune, transformers=args.transformers, pretrained='/data/zc/PVLM-main/bert-base-uncased')
         self.use_bert = args.use_bert
